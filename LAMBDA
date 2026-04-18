@@ -27,11 +27,12 @@ uv pip install --target . -r <(uv export --format requirements --no-dev) --platf
 zip -r ../func.zip app.py . -x "*.git* *.venv* pyproject.toml *.pyc"                                 # 8. Zip clean
 
 aws lambda create-function --function-name my-func --runtime python3.12 --role arn:aws:iam::ACCOUNT:role/lambda-role --handler app.lambda_handler --zip-file fileb://../func.zip  # 9. Deploy
-
+                           OR
+CREATE FUNCTION FROM UI --- CODE ---- ULOAD ZIP ON RIGHT SIDE --- 1)UPLOAD   2 ) FROM S3 --- GO ON BUCKET-GIVE URL
 # Update later: aws lambda update-function-code --function-name my-func --zip-file fileb://../func.zip
 --------------------------------------------------------
 
-
+--------------------------------------------------------
 3)ENV VAR 
 CREATE FUNCTION ----- CONFIGURATION ---- ENV VAR --- GIVE KEY:VALUE
 import os
@@ -46,3 +47,4 @@ def lambda_handler(event, context):
         'body': f"The variable value is: {my_variable}"
     }
 
+--------------------------------------------------------
