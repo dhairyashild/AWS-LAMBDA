@@ -2,7 +2,47 @@ LAMBDA BASIC(MUST) + OTHER POLICY AS PER RESOURCE MUST FOR LAMBDA
 
 15 MINUTES EXECUTION TIME
 
+RWAGH NOTES----
+--------------------------------------------------------
+#!/bin/bash
+# YOUR BEST UV Lambda Deploy - Prod Ready
+
+mkdir lambda-app && cd lambda-app                       # 1. Create project dir
+
+uv init                                              # 2. Init pyproject.toml
+
+echo 'requests = "*" 
+boto3 = "*"' >> pyproject.toml
+
+cat > app.py << 'EOF'                                                            # 4. Create handler
+def lambda_handler(event, context):
+    return {"statusCode": 200, "body": "Hello!"}
+EOF
+
+uv sync --frozen                                      # 5. Install deps
+
+rm -rf .venv                                             # 6. Clean
+uv pip install --target . -r <(uv export --format requirements --no-dev) --platform linux_x86_64        # 7. Linux deps
+
+zip -r ../func.zip app.py . -x "*.git* *.venv* pyproject.toml *.pyc"                                 # 8. Zip clean
+
+aws lambda create-function --function-name my-func --runtime python3.12 --role arn:aws:iam::ACCOUNT:role/lambda-role --handler app.lambda_handler --zip-file fileb://../func.zip  # 9. Deploy
+
+# Update later: aws lambda update-function-code --function-name my-func --zip-file fileb://../func.zip
+--------------------------------------------------------
 
 
+3)ENV VAR 
+CREATE FUNCTION ----- CONFIGURATION ---- ENV VAR --- GIVE KEY:VALUE
+import os
 
+def lambda_handler(event, context):
+
+    my_variable = os.environ.get('VARIABLE', 'default_value')                  #  os.environ.get()          to avoid KeyErrors 
+    print(f"Retrieved variable value: {my_variable}")
+    
+    return {
+        'statusCode': 200,
+        'body': f"The variable value is: {my_variable}"
+    }
 
