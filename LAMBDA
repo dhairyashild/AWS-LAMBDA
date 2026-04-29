@@ -1,3 +1,13 @@
+################################ SARANSH  ##################################################
+AWS LAMBDA---
+1- CODE
+2-TEST
+3-CONFIGURATION
+            -1) FUNCTION URL
+            -2) ENV VARIABLE --- CREATE key: value ---> import os ---> my_var = os.environ.get('key', 'default_value')--> use {my_var} to get value of key
+
+
+---------------------------------------------------
 LAMBDA BASIC(MUST) + OTHER POLICY AS PER RESOURCE MUST FOR LAMBDA 
 
 15 MINUTES EXECUTION TIME
@@ -48,3 +58,38 @@ def lambda_handler(event, context):
     }
 
 --------------------------------------------------------
+
+
+1  -- HELLOW FUNCTION 
+
+import json
+def lambda_handler(event, context):
+    print("Hello this is a lambda execution")
+    # 7000 implement
+    return {
+        "statusCode": 200,
+        "body": json.dumps('Hello from Lambda!')
+    }
+
+
+
+{
+  "Execution Results": {
+    "Status": "Succeeded",
+    "Max memory used": "33 MB",
+    "Time": "1.91 ms",
+    "Test Event Name": "demo-test-event"                                             ####  THIS IS TEST CASE NAME I GAVE
+  },
+  "Response": {
+    "statusCode": 200,
+    "body": "\"Hello from Lambda!\""                                                 ###   RETURN FUNCTION GIVEN BYDEFAULT
+  },
+  "Function Logs": {
+    "START": "RequestId: 06968088-7ee3-4e5e-9b97-995e0b7ab14e Version: $LATEST",
+    "Print": "Hello this is a lambda execution",                                   ###    THIS IS MY CODE ADDED IN FUNCTION
+    "END": "RequestId: 06968088-7ee3-4e5e-9b97-995e0b7ab14e",
+    "REPORT": "RequestId: 06968088-7ee3-4e5e-9b97-995e0b7ab14e Duration: 1.91 ms Billed Duration: 2 ms Memory Size: 128 MB"
+  },
+  "Request ID": "06968088-7ee3-4e5e-9b97-995e0b7ab14e"
+}
+----------------------------------------------------------------
