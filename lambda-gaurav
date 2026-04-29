@@ -1,0 +1,213 @@
+172
+
+def
+lambda handler (event, context):
+print("Hello viewers in print statement..."]                ######  this seen i cloudwatch logs only
+return (
+statuscode: 300,
+"body" sun-dusps ("Hello Viewer's...")                      ### this seen in o/p responceafter test
+----------------------------------------------------
+173
+
+import json
+def lambda_handler(event, context):
+    number1 = 5
+    number2 = 60
+    
+    sum = number1 + number2
+    mul = number1 * number2
+    sub = number2 - number1
+    div = number2 / number1
+    
+    return {
+        'statusCode': 200,
+        'body': {
+            "sum": sum,
+            "sub": sub,
+            "mul": mul,
+            "div": div
+        }
+    }
+####################
+TEST ---------->  EVENT JSON :
+{
+  "number1": 10,
+  "number2": 5
+}
+
+import json
+def lambda_handler(event, context):
+  print(event)                                      # THIS IS HOW U CAN CALL EVENT VARS IN FUNCTION
+----------------->
+{ "number1": 10,  "number2": 5 }
+
+#########################
+def lambda_handler(event, context):
+    print(event)
+    
+    number1 = event.get('number1', 0)               # event.get('EVENT_KEY_NAME', DEFAULT_VALUE_GIVE_IF+EVENT_VALUE_NOT_SET)
+    number2 = event.get('number2', 0)
+    
+    sum_result = number1 + number2
+  
+    return {
+        "statusCode": 200,
+        "body": {
+            "sum": sum_result,
+        }
+    }
+--------------------------------------------------------------
+178 -AWS LAMBDA GENERAL CONFIGURATION (SHORTEST NOTES):
+
+FUNCTION ----> CONFIGURATION  -----> GENERAL CONF ---> EDIT
+
+MEMORY:
+- Range: 128 MB to 10,240 MB (10 GB)
+- Increments: 1 MB
+- CPU scales linearly with memory
+
+TIMEOUT:
+- Max: 900 seconds (15 minutes)
+- Default: 3 seconds
+- Min: 1 second
+
+EPHEMERAL STORAGE (/tmp):
+- Max: 512 MB to 10,240 MB (10 GB)
+- Default: 512 MB
+
+CONCURRENCY:
+- Reserved: Guaranteed max for function
+- Provisioned: Pre-initialized instances (no cold start)
+- Burst: 500-3000 per region
+
+DEPLOYMENT PACKAGE:
+- ZIP: 50 MB (compressed), 250 MB (uncompressed)
+- Container image: 10 GB max
+
+ENVIRONMENT VARIABLES:
+- Max: 4 KB total (key + value)
+
+HANDLER NAMING:
+- Format: filename.handler_function
+- Example: lambda_function.lambda_handler
+
+REQUEST/RESPONSE:
+- Synchronous: 6 MB (API Gateway, ALB)
+- Asynchronous: 256 KB (S3, SNS, EventBridge)
+
+VPC:
+- Attach to private subnets
+- Needs NAT gateway for public internet
+
+LAYERS:
+- Max 5 layers per function
+- 250 MB unzipped per layer
+
+COLD START:
+- ZIP: 100-300ms (Node/Python), 400-600ms (Java/.NET)
+- Container: 1-2 seconds minimum
+
+PRICING:
+- Per 1ms execution
+- Free tier: 1 million requests/month, 400,000 GB-seconds
+----------------------------------------------------------------
+MY GPT SEARCH
+
+| ASPECT | EVENT | ENVIRONMENT VARIABLES |
+|--------|-------|----------------------|
+| Changes per invocation | ✅ YES | ❌ NO |
+| Set in code | ❌ NO (passed by trigger) | ✅ YES (config) |
+| Access method | `event['key']` | `os.environ['KEY']` |
+| Max size | 6 MB (sync) / 256 KB (async) | 4 KB (total all vars) |
+| Encryption | ❌ No (plain text in logs) | ✅ Yes (KMS encryption) |
+| Use for | User input, file names, request ID | Database URLs, API keys, env name |
+| Security | Low | High |
+| Modification | Per invocation | Requires redeploy |
+| Example value | `{"user": "john", "file": "a.jpg"}` | `DATABASE_URL=postgres://...` |
+-----------------------------------------------------------------------
+AWS Tutorial 179 - AWS Lambda - Context Object in Function - AWS in hindi
+
+---- WHAT WE GET (CONTEXT OBJECT ATTRIBUTES):
+| Attribute | Description | Example |
+|-----------|-------------|---------|
+| aws_request_id | Unique ID for this invocation | 85b043db-37ee-48e3... |
+| log_group_name | CloudWatch log group | /aws/lambda/my-function |
+| log_stream_name | CloudWatch log stream | 2024/01/15/[$LATEST]... |
+| function_name | Lambda function name | my-function |
+| function_version | Version ($LATEST or number) | $LATEST |
+| invoked_function_arn | Full ARN of function | arn:aws:lambda:... |
+| memory_limit_in_mb | Configured memory | 128 |
+| remaining_time_in_millis | Time left before timeout (ms) | 8500 |
+
+---WHY WE NEED IT:
+1. TRACKING: Get unique request ID for debugging
+2. LOGGING: Know which log stream to search
+3. TIMEOUT CONTROL: Check remaining time before exiting
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+
+-----------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------
+
+
+
+
