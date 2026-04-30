@@ -1,0 +1,20 @@
+# For DevOps with AWS Lambda + Boto3 - Must Watch Videos:
+
+1. Video #1: Getting started with Boto3 (basics)
+2. Video #6-7: S3 Bucket + Upload (storage ops)
+3. Video #9: Lambda Function Python (core)
+4. Video #11: EC2 stop → SMS (automation)
+5. Video #14: Scheduling EC2 business hours (cost saving)
+6. Video #20: Billing Alerts (monitoring)
+7. Video #33: SQS Queue (async processing)
+8. Video #44: Lambda Layers (dependencies)
+9. Video #47: SNS + SQS + Lambda (fan-out)
+10. Video #49: Lambda chaining
+11. Video #52: Secrets Manager (security)
+12. Video #53: Step Functions (orchestration)
+13. Video #56: Dead Letter Queue (error handling)
+14. Video #60: AWS Lambda from 0 to Hero (masterclass)
+15. Video #74: SQS + Lambda + DLQ (production pattern)
+
+# Skip: #58, #61, #62 (not DevOps)
+# Priority: #14, #33, #47, #52, #53, #56, #74
