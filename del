@@ -18,3 +18,33 @@
 
 # Skip: #58, #61, #62 (not DevOps)
 # Priority: #14, #33, #47, #52, #53, #56, #74
+
+
+
+Level 1: Beginner
+1. EBS Snapshot Cleanup (delete >30 days) - S3 trigger + CloudWatch Events
+2. Start/Stop EC2 on Schedule (9 AM IST to 8 PM IST) - EventBridge cron
+3. AMI Backup with 7-Day Retention - DescribeImages + deregister old
+4. Auto-tag Unattached EBS Volumes - Filter available status + create tags
+5. Send S3 Upload Notification to Slack - S3 event + webhook
+
+Level 2: Intermediate
+6. Copy AMI to DR Region (ap-south-1 to ap-southeast-1) - Cross-region replication
+7. Rotate RDS TLS Certificates Automatically - Modify DB instance + SNS notify
+8. Scale EBS Volume IOPS Dynamically (gp2→gp3 based on CloudWatch alarm)
+9. Remediate Security Groups (remove open 0.0.0.0/22) - Auto-revoke bad rules
+10. Create AMI from Instance ID via SNS ChatOps - SNS trigger + Lambda
+
+Level 3: Advanced
+11. EBS Volume Auto-Resize from CloudWatch (80% threshold reached)
+12. Lambda in VPC to access RDS Private Subnet - ENI + Security Group config
+13. Dead Letter Queue (SQS) for failed snapshot copy operations
+14. Reserved Concurrency to prevent runaway Lambda costs
+15. AWS X-Ray Tracing for EBS/AMI backup workflows
+
+Level 4: Expert
+16. Step Functions orchestration: Snapshot → Copy → Create Volume → Attach → Verify
+17. Secrets Manager rotation for EC2 MySQL credentials (Lambda rotation function)
+18. Provisioned Concurrency for backup-critical Lambda (zero cold start)
+19. AWS SAM deployment with CodeDeploy Canary (10% traffic shift)
+20. Multi-region Disaster Recovery Lambda (active-passive with Route53 failover)
