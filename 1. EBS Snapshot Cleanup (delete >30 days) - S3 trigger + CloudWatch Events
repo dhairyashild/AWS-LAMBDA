@@ -1,0 +1,39 @@
+STEP1: IAM Role - Attach policy AWSLambdaBasicExecutionRole and custom inline:
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": ["ec2:DescribeSnapshots", "ec2:DeleteSnapshot"],
+    "Resource": "*"
+  }]
+}
+
+STEP2: Lambda function name: ebs-snapshot-cleanup, Runtime: Python 3.12, Architecture: x86_64
+
+STEP3: Lambda code:
+import boto3
+from datetime import datetime, timezone
+def lambda_handler(event, context):
+    ec2 = boto3.client('ec2')
+    snapshots = ec2.describe_snapshots(OwnerIds=['self'])['Snapshots']
+    deleted_count = 0
+    now = datetime.now(timezone.utc)
+    for snap in snapshots:
+        snap_id = snap['SnapshotId']
+        snap_time = snap['StartTime']
+        age = now - snap_time
+        if age.days > 30:
+            try:
+                ec2.delete_snapshot(SnapshotId=snap_id)
+                print(f"Deleted: {snap_id} | Age: {age.days} days")
+                deleted_count += 1
+            except Exception as e:
+                print(f"Error deleting {snap_id}: {str(e)}")
+    print(f"Total deleted: {deleted_count}")
+    return {'statusCode': 200, 'body': f"Deleted {deleted_count} snapshots."}
+
+STEP4: Deploy → Test → Create test event → Save → Test
+
+STEP5: Add trigger → EventBridge → Rule: daily-snapshot-cleanup → Schedule: cron(0 1 * * ? *)
+
+STEP6: Verify in CloudWatch Logs: /aws/lambda/ebs-snapshot-cleanup
